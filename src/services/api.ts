@@ -1,5 +1,4 @@
-/* 
-import { Category, Product } from "@/services/api";
+import { Category, Product } from "../types";
 
 const BASE_URL_1 = "https://api.api-store.workers.dev/api/bazardor";
 const BASE_URL_2 = "https://api.abcz.workers.dev/api/bazardor";
@@ -182,4 +181,3 @@ export async function fetchCategoryBySlug(
   
   return null;
 }
-*/

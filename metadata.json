@@ -1,0 +1,6 @@
+{
+  "name": "বাজার দর - নিত্যপণ্যের বাজারদর ও বিশ্লেষণ",
+  "description": "বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের বাজার দর, বাজারভিত্তিক বিস্তারিত দাম, গড় ও হ্রাস-বৃদ্ধির নির্ভরযোগ্য তথ্য এক নজরে।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
