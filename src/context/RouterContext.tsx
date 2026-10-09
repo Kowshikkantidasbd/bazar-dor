@@ -1,6 +1,7 @@
 'use client';
 
 import React, {
+  Suspense,
   createContext,
   useCallback,
   useContext,
@@ -24,16 +25,23 @@ const parseQuery = (to: string): URLSearchParams => {
   return new URLSearchParams(queryString);
 };
 
+// Only this tiny component reads usePathname(), so only it suspends.
+const PathnameSync: React.FC<{ onChange: (p: string) => void }> = ({ onChange }) => {
+  const pathname = usePathname() || '/';
+  useEffect(() => {
+    onChange(pathname);
+  }, [pathname, onChange]);
+  return null;
+};
+
 export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const nextRouter = useNextRouter();
-  const pathname = usePathname() || '/';
+  const [pathname, setPathname] = useState('/');
 
-  
   const [queryParams, setQueryParams] = useState<URLSearchParams>(
     () => new URLSearchParams()
   );
 
-  
   useEffect(() => {
     const sync = () => setQueryParams(new URLSearchParams(window.location.search));
     sync();
@@ -43,7 +51,6 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const navigate = useCallback(
     (to: string, replace = false) => {
-      
       if (to.startsWith('#')) {
         const elem = document.querySelector(decodeURIComponent(to));
         elem?.scrollIntoView({ behavior: 'smooth' });
@@ -66,7 +73,14 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     [pathname, navigate, queryParams]
   );
 
-  return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
+  return (
+    <RouterContext.Provider value={value}>
+      <Suspense fallback={null}>
+        <PathnameSync onChange={setPathname} />
+      </Suspense>
+      {children}
+    </RouterContext.Provider>
+  );
 };
 
 export const useRouter = () => {
