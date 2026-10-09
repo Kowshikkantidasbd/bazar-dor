@@ -42,8 +42,8 @@ export default function SignUpPage() {
   };
 
   const handleSocial = async (provider: 'google' | 'github') => {
-    await socialLogin(provider);
-    navigate(redirectUrl);
+    
+    await socialLogin(provider, redirectUrl);
   };
 
   return (

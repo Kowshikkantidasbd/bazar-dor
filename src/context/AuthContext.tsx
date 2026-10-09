@@ -10,7 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, pass: string) => Promise<boolean>;
   signup: (name: string, email: string, pass: string) => Promise<boolean>;
-  socialLogin: (provider: 'google' | 'github') => Promise<void>;
+  socialLogin: (provider: 'google' | 'github', redirectTo?: string) => Promise<void>;
   updateUser: (data: { name: string; image?: string }) => Promise<boolean>;
   logout: () => Promise<void>;
 }
@@ -139,13 +139,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 
  
-  const socialLogin = useCallback(async (provider: 'google' | 'github'): Promise<void> => {
+  const socialLogin = useCallback(
+    async (provider: 'google' | 'github', redirectTo: string = '/'): Promise<void> => {
     const providerName = provider === 'google' ? 'Google' : 'GitHub';
 
     try {
       const { error } = await authClient.signIn.social({
         provider,
-        callbackURL: window.location.origin,
+        callbackURL: redirectTo.startsWith('/') ? redirectTo : '/',
       });
 
       if (error) {
@@ -156,7 +157,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error(`${providerName} social login failed:`, e);
       toast.error(`${providerName} দিয়ে সাইন ইন করা যায়নি।`);
     }
-  }, []);
+    },
+    []
+  );
 
   
   const updateUser = useCallback(

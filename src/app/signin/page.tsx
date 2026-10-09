@@ -31,8 +31,8 @@ export default function SignInPage() {
   };
 
   const handleSocial = async (provider: 'google' | 'github') => {
-    await socialLogin(provider);
-    navigate(redirectUrl);
+    
+    await socialLogin(provider, redirectUrl);
   };
 
   return (
@@ -70,7 +70,7 @@ export default function SignInPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="কমপক্ষে ৮ অক্ষর"
+              placeholder="কমপক্ষে ৬ অক্ষর"
               required
               className="w-full bg-slate-50/70 border border-slate-200 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a7c42]/20 focus:border-[#0a7c42] transition-all"
             />
