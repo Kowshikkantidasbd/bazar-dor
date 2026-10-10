@@ -7,7 +7,6 @@ import { useRouter } from '../context/RouterContext';
 
 const PRODUCTS_SECTION_ID = 'সব-পণ্য';
 
-
 const heroImage: string =
   typeof heroImageImport === 'string'
     ? heroImageImport
@@ -24,7 +23,6 @@ export const Hero: React.FC = () => {
 
   const isHome = currentPath.split('#')[0] === '/';
 
- 
   useEffect(() => {
     if (!isHome) return;
     if (decodeURIComponent(window.location.hash) === `#${PRODUCTS_SECTION_ID}`) {
@@ -44,24 +42,19 @@ export const Hero: React.FC = () => {
   return (
     <div className="relative isolate overflow-hidden rounded-3xl bg-white border border-emerald-100/80 shadow-sm p-6 sm:p-10 mb-8 sm:mb-12">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 sm:gap-12">
-        {/* Left Column: Text & CTA */}
         <div className="flex-1 text-left">
-          {/* Eyebrow */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#0a7c42] text-xs font-semibold mb-4 border border-emerald-200/50">
             <span>আজকের বাজারের দর</span>
           </div>
 
-          
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-[1.2] mb-4">
             আজকের বাজারের দাম এক নজরে
           </h1>
 
-          
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-xl">
             চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বোচ্চ এবং আগের পরিবর্তন এক জায়গায়।
           </p>
 
-          
           <div>
             <Button
               onPress={handleScrollToProducts}
@@ -73,23 +66,17 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-
         <div className="w-full md:w-auto flex justify-center items-center">
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-72 lg:h-72 flex items-center justify-center">
-            
-            
-            <div className="absolute inset-2 rounded-full bg-emerald-50/70 -z-10" />
-            <img
-              src={heroImage}
-              alt="বাজারের তাজা পণ্যের ঝুড়ি"
-              width={288}
-              height={288}
-              loading="eager"
-              draggable={false}
-              className="w-full h-full object-contain drop-shadow-md"
-            />
-          </div>
-        </div>
+  <img
+    src={heroImage}
+    alt="বাজারের তাজা পণ্যের ঝুড়ি"
+    width={400}
+    height={400}
+    loading="eager"
+    draggable={false}
+    className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-contain"
+  />
+</div>
       </div>
     </div>
   );
