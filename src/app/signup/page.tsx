@@ -9,34 +9,49 @@ import { useRouter } from '@/context/RouterContext';
 
 export default function SignUpPage() {
   const { signup, socialLogin } = useAuth();
+
   const { navigate, queryParams } = useRouter();
   const [name, setName] = useState('');
+  
   const [email, setEmail] = useState('');
+  
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  
   const [loading, setLoading] = useState(false);
 
   const redirectUrl = queryParams.get('redirect') || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     if (!name || !email || !password || !confirmPassword) {
       toast.error('সকল প্রয়োজনীয় তথ্য পূরণ করুন।');
+  
       return;
     }
+  
     if (password !== confirmPassword) {
       toast.error('পাসওয়ার্ড দুটি মিলছে না!');
+  
       return;
     }
+  
     if (password.length < 6) {
+  
       toast.error('পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।');
+  
       return;
     }
 
     setLoading(true);
+  
     const ok = await signup(name, email, password);
+  
     setLoading(false);
+  
     if (ok) {
+  
       navigate(redirectUrl);
     }
   };
@@ -47,22 +62,28 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="py-8 sm:py-12 flex justify-center items-center">
+  
+  <div className="py-8 sm:py-12 flex justify-center items-center">
+  
       <Card className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-sm text-center">
         
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
           অ্যাকাউন্ট তৈরি করুন
         </h1>
+  
         <p className="text-xs sm:text-sm text-slate-500 mb-8 leading-relaxed">
           বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
         </p>
 
         
         <form onSubmit={handleSubmit} className="space-y-4 text-left">
+  
           <div>
+  
             <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               নাম
             </label>
+  
             <input
               type="text"
               value={name}
@@ -74,9 +95,11 @@ export default function SignUpPage() {
           </div>
 
           <div>
+  
             <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               ইমেইল
             </label>
+  
             <input
               type="email"
               value={email}
@@ -88,9 +111,11 @@ export default function SignUpPage() {
           </div>
 
           <div>
+  
             <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               পাসওয়ার্ড
             </label>
+  
             <input
               type="password"
               value={password}
@@ -99,12 +124,16 @@ export default function SignUpPage() {
               required
               className="w-full bg-slate-50/70 border border-slate-200 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a7c42]/20 focus:border-[#0a7c42] transition-all"
             />
+  
           </div>
 
+  
           <div>
+  
             <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               পাসওয়ার্ড নিশ্চিত করুন
             </label>
+  
             <input
               type="password"
               value={confirmPassword}
@@ -113,29 +142,38 @@ export default function SignUpPage() {
               required
               className="w-full bg-slate-50/70 border border-slate-200 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a7c42]/20 focus:border-[#0a7c42] transition-all"
             />
+  
           </div>
 
           <Button
-            type="submit"
+  
+  type="submit"
             isDisabled={loading}
             className="w-full py-3 bg-[#0a7c42] hover:bg-[#086335] text-white font-medium text-sm sm:text-base rounded-xl transition-colors shadow-sm mt-2 disabled:opacity-50 cursor-pointer"
           >
             {loading ? 'অপেক্ষা করুন...' : 'অ্যাকাউন্ট তৈরি করুন'}
+          
           </Button>
+        
         </form>
 
         
         <div className="relative my-6">
+          
           <div className="absolute inset-0 flex items-center">
+          
             <div className="w-full border-t border-slate-200" />
+          
           </div>
           <div className="relative flex justify-center text-xs">
             <span className="bg-white px-3 text-slate-400 font-medium">অথবা</span>
+          
           </div>
         </div>
 
         
         <div className="grid grid-cols-2 gap-3">
+        
           <Button
             variant="outline"
             onClick={() => handleSocial('google')}
