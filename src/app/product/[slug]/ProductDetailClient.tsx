@@ -10,39 +10,65 @@ import { Product } from '@/types';
 import { toBnNum, formatBnUnit } from '@/utils/bengali';
 
 interface ProductDetailClientProps {
-  slug: string;
+  slug?: string;
 }
+
+const safeDecode = (value: string): string => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
+
+const resolveSlug = (propSlug?: string): string => {
+  if (propSlug) return safeDecode(propSlug);
+  if (typeof window !== 'undefined') {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts[0] === 'product' && parts[1]) return safeDecode(parts[1]);
+  }
+  return '';
+};
 
 export default function ProductDetailClient({ slug: rawSlug }: ProductDetailClientProps) {
   const { user, isLoading: authLoading } = useAuth();
   const { navigate } = useRouter();
 
-  const slug = (() => {
-    try {
-      return decodeURIComponent(rawSlug || '');
-    } catch {
-      return rawSlug || '';
-    }
-  })();
-
+  const [slug, setSlug] = useState('');
+  const [slugReady, setSlugReady] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
+    setSlug(resolveSlug(rawSlug));
+    setSlugReady(true);
+  }, [rawSlug]);
+
+  
+  useEffect(() => {
+    if (!slugReady) return;
     if (!authLoading && !user) {
       toast.error('বিস্তারিত দেখতে অনুগ্রহ করে সাইন ইন করুন।');
-      navigate(`/signin?redirect=/product/${slug}`, true);
+      navigate(`/signin?redirect=/product/${encodeURIComponent(slug)}`, true);
     }
-  }, [user, authLoading, slug, navigate]);
+  }, [slugReady, user, authLoading, slug, navigate]);
 
+  
   useEffect(() => {
+    if (!slugReady) return;
+    console.log('ProductDetail slug:', slug);
+
     if (!slug) {
       setLoading(false);
       return;
     }
+
     setLoading(true);
     fetchProductByIdOrSlug(slug)
       .then((data) => {
+        console.log('product:', data);
         setProduct(data);
       })
       .catch((err) => {
@@ -52,7 +78,7 @@ export default function ProductDetailClient({ slug: rawSlug }: ProductDetailClie
       .finally(() => {
         setLoading(false);
       });
-  }, [slug]);
+  }, [slugReady, slug]);
 
   if (authLoading || !user) {
     return (
@@ -62,7 +88,7 @@ export default function ProductDetailClient({ slug: rawSlug }: ProductDetailClie
     );
   }
 
-  if (!loading && !product) {
+  if (slugReady && !loading && !product) {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
         <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-200">
@@ -85,7 +111,7 @@ export default function ProductDetailClient({ slug: rawSlug }: ProductDetailClie
     );
   }
 
-  if (loading || !product) {
+  if (!slugReady || loading || !product) {
     return (
       <div className="space-y-6 animate-pulse">
         <div className="h-4 bg-slate-200 rounded w-48 mb-4" />
