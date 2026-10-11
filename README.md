@@ -84,26 +84,11 @@ npm run build
 npm start
 ```
 
-## 🔑 Environment Variables
-
-Create a `.env.local` file in the root directory of the project and add the required environment variables.
-
-**Never commit your `.env.local` file or expose secret credentials on GitHub.**
-
-Example configuration:
-
-```env
-GITHUB_ID=your_client_id
-GITHUB_SECRET=your_client_secret
-```
-
-Update these variables according to the authentication provider actually used in your project.
-
-For Vercel deployment, add the required variables under **Project Settings → Environment Variables**.
+Variables**.
 
 ## ☁️ Deployment
 
-This project can be deployed using [Vercel](https://vercel.com/).
+This project can be deployed using [Vercel](https://bazar-dor-cgzi.vercel.app/).
 
 1. Push your code to GitHub.
 2. Import the repository into Vercel.
