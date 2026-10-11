@@ -2,10 +2,19 @@ import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from '@better-auth/mongo-adapter';
 import { db } from './mongodb';
 
+const baseURL = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
+
+// যে যে ঠিকানা থেকে অনুরোধ আসতে পারবে
+const trustedOrigins = [
+  baseURL,
+  'http://localhost:3000',
+  'https://bazar-dor-cgzi.vercel.app',
+  process.env.BETTER_AUTH_URL_1,
+].filter((origin): origin is string => Boolean(origin));
+
 export const auth = betterAuth({
-  // BETTER_AUTH_URL ও BETTER_AUTH_SECRET env থেকে নিজে থেকেই পড়া হয়।
-  // Production এ BETTER_AUTH_SECRET না থাকলে better-auth নিজেই error দেবে।
-  baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+  baseURL,
+  trustedOrigins: Array.from(new Set(trustedOrigins)),
   secret: process.env.BETTER_AUTH_SECRET,
 
   database: mongodbAdapter(db),
@@ -28,7 +37,7 @@ export const auth = betterAuth({
     },
   },
 
-  // একই ইমেইল দিয়ে Google / GitHub / পাসওয়ার্ড — সব একই অ্যাকাউন্টে যুক্ত হবে
+  
   account: {
     accountLinking: {
       enabled: true,
