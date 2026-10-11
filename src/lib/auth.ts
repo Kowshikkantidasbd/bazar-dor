@@ -4,7 +4,7 @@ import { db } from './mongodb';
 
 const baseURL = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
 
-// যে যে ঠিকানা থেকে অনুরোধ আসতে পারবে
+
 const trustedOrigins = [
   baseURL,
   'http://localhost:3000',

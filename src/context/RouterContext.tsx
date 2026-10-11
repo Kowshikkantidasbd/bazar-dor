@@ -25,7 +25,7 @@ const parseQuery = (to: string): URLSearchParams => {
   return new URLSearchParams(queryString);
 };
 
-// Only this tiny component reads usePathname(), so only it suspends.
+
 const PathnameSync: React.FC<{ onChange: (p: string) => void }> = ({ onChange }) => {
   const pathname = usePathname() || '/';
   useEffect(() => {

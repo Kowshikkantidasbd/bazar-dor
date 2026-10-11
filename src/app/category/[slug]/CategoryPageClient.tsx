@@ -21,7 +21,7 @@ const safeDecode = (value: string): string => {
   }
 };
 
-// প্রপ খালি এলে ব্রাউজারের URL (/category/ডাল) থেকে স্লাগ নেওয়া হবে
+
 const resolveSlug = (propSlug?: string): string => {
   if (typeof propSlug === 'string' && propSlug) {
     return safeDecode(propSlug);

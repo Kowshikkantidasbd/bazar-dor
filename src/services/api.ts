@@ -118,7 +118,7 @@ export async function fetchProductsByCategory(
       fetchCategoryBySlug(categorySlug),
     ]);
 
-    // ক্যাটাগরির সব পরিচয় (slug, id, বাংলা নাম) দিয়ে মেলানো হবে
+    
     const keys = new Set<string>([norm(categorySlug)]);
     if (cat) {
       const r = cat as unknown as Rec;

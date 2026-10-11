@@ -1,4 +1,3 @@
-// Bengali numeral and date conversion utilities
 
 const bnDigits: Record<string, string> = {
   '0': '০',
