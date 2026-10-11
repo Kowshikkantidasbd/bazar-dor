@@ -32,7 +32,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={hindSiliguri.variable}
     >
-      <body className={hindSiliguri.className}>
+      <body className={hindSiliguri.className} suppressHydrationWarning>
         <AuthProvider>
           <RouterProvider>
             <div className="min-h-screen flex flex-col bg-[#f7faf8] text-slate-800">
