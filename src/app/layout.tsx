@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
 import { Navbar } from '../components/Navbar';
@@ -30,9 +31,11 @@ export default function RootLayout({
     <html
       lang="bn"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={hindSiliguri.variable}
     >
       <body className={hindSiliguri.className} suppressHydrationWarning>
+        <NextTopLoader color="#0a7c42" height={3} showSpinner={false} />
         <AuthProvider>
           <RouterProvider>
             <div className="min-h-screen flex flex-col bg-[#f7faf8] text-slate-800">

@@ -4,12 +4,12 @@ import { db } from './mongodb';
 
 const baseURL = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
 
-
 const trustedOrigins = [
   baseURL,
   'http://localhost:3000',
   'https://bazar-dor-cgzi.vercel.app',
   process.env.BETTER_AUTH_URL_1,
+  process.env.BETTER_AUTH_URL_2,
 ].filter((origin): origin is string => Boolean(origin));
 
 export const auth = betterAuth({
@@ -22,6 +22,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 6,
+    autoSignIn: false,
   },
 
   socialProviders: {
@@ -37,7 +38,6 @@ export const auth = betterAuth({
     },
   },
 
-  
   account: {
     accountLinking: {
       enabled: true,
